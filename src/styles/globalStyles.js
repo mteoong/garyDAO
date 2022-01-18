@@ -43,7 +43,7 @@ export const Container = styled.div`
   flex-direction: ${({ fd }) => (fd ? fd : "column")};
   justify-content: ${({ jc }) => (jc ? jc : "flex-start")};
   align-items: ${({ ai }) => (ai ? ai : "flex-start")};
-  background-color: ${({ test }) => (test ? "pink" : "none")};
+  background-color: #f7f7f7;
   width: 100%;
   background-image: ${({ image }) => (image ? `url(${image})` : "none")};
   background-size: cover;
@@ -51,20 +51,20 @@ export const Container = styled.div`
 `;
 
 export const TextTitle = styled.p`
-  color: var(--primary-text);
+  color: black;
   font-size: 22px;
   font-weight: 500;
   line-height: 1.6;
 `;
 
 export const TextSubTitle = styled.p`
-  color: var(--primary-text);
+  color: black;
   font-size: 18px;
   line-height: 1.6;
 `;
 
 export const TextDescription = styled.p`
-  color: var(--primary-text);
+  color: black;
   font-size: 16px;
   line-height: 1.6;
 `;

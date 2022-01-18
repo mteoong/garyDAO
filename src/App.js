@@ -4,6 +4,8 @@ import { connect } from "./redux/blockchain/blockchainActions";
 import { fetchData } from "./redux/data/dataActions";
 import * as s from "./styles/globalStyles";
 import styled from "styled-components";
+import './App.css';
+import './Button.css';
 
 const truncate = (input, len) =>
   input.length > len ? `${input.substring(0, len)}...` : input;
@@ -11,11 +13,11 @@ const truncate = (input, len) =>
 export const StyledButton = styled.button`
   padding: 10px;
   border-radius: 50px;
-  border: none;
-  background-color: var(--secondary);
+  border: 1px solid black;
+  background: none;
   padding: 10px;
   font-weight: bold;
-  color: var(--secondary-text);
+  color: black;
   width: 100px;
   cursor: pointer;
   box-shadow: 0px 6px 0px -2px rgba(250, 250, 250, 0.3);
@@ -90,7 +92,7 @@ export const StyledImg = styled.img`
 `;
 
 export const StyledLink = styled.a`
-  color: var(--secondary);
+  color: "black";
   text-decoration: none;
 `;
 
@@ -195,39 +197,35 @@ function App() {
 
   return (
     <s.Screen>
+      <div className="top">
+        <h1 className="title"> GARY'S D</h1>
+        <h2>  Mint a pass to the only official GaryDAO, not officially affiliated with Gary Vaynerchuk. </h2>
+      </div>
       <s.Container
         flex={1}
-        ai={"center"}
-        style={{ padding: 24, backgroundColor: "var(--primary)" }}
+        ai={"flex-start"}
+        style={{ padding: 10, backgroundColor: "#f7f7f7"}}
         image={CONFIG.SHOW_BACKGROUND ? "/config/images/bg.png" : null}
       >
-        <a href={CONFIG.MARKETPLACE_LINK}>
-          <StyledLogo alt={"logo"} src={"/config/images/logo.png"} />
-        </a>
-        <s.SpacerSmall />
-        <ResponsiveWrapper flex={1} style={{ padding: 24 }} test>
-          <s.Container flex={1} jc={"center"} ai={"center"}>
-            <StyledImg alt={"example"} src={"/config/images/example.gif"} />
-          </s.Container>
-          <s.SpacerLarge />
+        <ResponsiveWrapper style={{
+          width: "45%",
+          }} test>
           <s.Container
             flex={2}
             jc={"center"}
             ai={"center"}
             style={{
-              backgroundColor: "var(--accent)",
-              padding: 24,
-              borderRadius: 24,
-              border: "4px dashed var(--secondary)",
-              boxShadow: "0px 5px 11px 2px rgba(0,0,0,0.7)",
+              padding: 10,
+              backgroundColor: "#f7f7f7",
             }}
           >
             <s.TextTitle
               style={{
                 textAlign: "center",
-                fontSize: 50,
+                fontSize: 80,
                 fontWeight: "bold",
-                color: "var(--accent-text)",
+                fontFamily: "Arial",
+                color: "black",
               }}
             >
               {data.totalSupply} / {CONFIG.MAX_SUPPLY}
@@ -235,7 +233,7 @@ function App() {
             <s.TextDescription
               style={{
                 textAlign: "center",
-                color: "var(--primary-text)",
+                color: "black",
               }}
             >
               <StyledLink target={"_blank"} href={CONFIG.SCAN_LINK}>
@@ -247,37 +245,24 @@ function App() {
                 textAlign: "center",
               }}
             >
-              <StyledButton
-                onClick={(e) => {
-                  window.open("/config/roadmap.pdf", "_blank");
-                }}
-                style={{
-                  margin: "5px",
-                }}
-              >
-                Roadmap
-              </StyledButton>
-              <StyledButton
-                style={{
-                  margin: "5px",
-                }}
-                onClick={(e) => {
+              <button className="btn btn-1 hover-filled-opacity" onClick={(e) => {
                   window.open(CONFIG.MARKETPLACE_LINK, "_blank");
-                }}
-              >
-                {CONFIG.MARKETPLACE}
-              </StyledButton>
+                }} style = {{
+                  marginTop: "12px",
+                }}>
+              <span>{CONFIG.MARKETPLACE}</span>
+              </button>
             </span>
             <s.SpacerSmall />
             {Number(data.totalSupply) >= CONFIG.MAX_SUPPLY ? (
               <>
                 <s.TextTitle
-                  style={{ textAlign: "center", color: "var(--accent-text)" }}
+                  style={{ textAlign: "center", color: "black", fontSize: "18px",}}
                 >
                   The sale has ended.
                 </s.TextTitle>
                 <s.TextDescription
-                  style={{ textAlign: "center", color: "var(--accent-text)" }}
+                  style={{ textAlign: "center", color: "black", fontSize: "18px",}}
                 >
                   You can still find {CONFIG.NFT_NAME} on
                 </s.TextDescription>
@@ -289,39 +274,22 @@ function App() {
             ) : (
               <>
                 <s.TextTitle
-                  style={{ textAlign: "center", color: "var(--accent-text)" }}
+                  style={{ textAlign: "center", color: "black", fontSize: "18px",}}
                 >
-                  1 {CONFIG.SYMBOL} costs {CONFIG.DISPLAY_COST}{" "}
-                  {CONFIG.NETWORK.SYMBOL}.
+                  The first 420 are free! Then it's 0.01E to mint a GARYD.
                 </s.TextTitle>
                 <s.SpacerXSmall />
-                <s.TextDescription
-                  style={{ textAlign: "center", color: "var(--accent-text)" }}
-                >
-                  Excluding gas fees.
-                </s.TextDescription>
                 <s.SpacerSmall />
                 {blockchain.account === "" ||
                 blockchain.smartContract === null ? (
                   <s.Container ai={"center"} jc={"center"}>
-                    <s.TextDescription
-                      style={{
-                        textAlign: "center",
-                        color: "var(--accent-text)",
-                      }}
-                    >
-                      Connect to the {CONFIG.NETWORK.NAME} network
-                    </s.TextDescription>
-                    <s.SpacerSmall />
-                    <StyledButton
-                      onClick={(e) => {
+                    <button className="btn btn-1 hover-filled-opacity" onClick={(e) => {
                         e.preventDefault();
                         dispatch(connect());
                         getData();
-                      }}
-                    >
-                      CONNECT
-                    </StyledButton>
+                    }}>
+                      <span>CONNECT</span>
+                    </button>                   
                     {blockchain.errorMsg !== "" ? (
                       <>
                         <s.SpacerSmall />
@@ -348,16 +316,13 @@ function App() {
                     </s.TextDescription>
                     <s.SpacerMedium />
                     <s.Container ai={"center"} jc={"center"} fd={"row"}>
-                      <StyledRoundButton
-                        style={{ lineHeight: 0.4 }}
-                        disabled={claimingNft ? 1 : 0}
+                    <button className="btn btn-1 hover-filled-opacity" style={{borderRadius: "50%"}} disabled={claimingNft ? 1 : 0}
                         onClick={(e) => {
                           e.preventDefault();
                           decrementMintAmount();
-                        }}
-                      >
-                        -
-                      </StyledRoundButton>
+                        }}>
+                    <span>-</span>
+                    </button>
                       <s.SpacerMedium />
                       <s.TextDescription
                         style={{
@@ -368,28 +333,24 @@ function App() {
                         {mintAmount}
                       </s.TextDescription>
                       <s.SpacerMedium />
-                      <StyledRoundButton
-                        disabled={claimingNft ? 1 : 0}
+                      <button className="btn btn-1 hover-filled-opacity" style={{borderRadius: "50%"}} disabled={claimingNft ? 1 : 0}
                         onClick={(e) => {
                           e.preventDefault();
                           incrementMintAmount();
-                        }}
-                      >
-                        +
-                      </StyledRoundButton>
+                        }}>
+                      <span>+</span>
+                      </button>
                     </s.Container>
                     <s.SpacerSmall />
                     <s.Container ai={"center"} jc={"center"} fd={"row"}>
-                      <StyledButton
-                        disabled={claimingNft ? 1 : 0}
+                    <button className="btn btn-1 hover-filled-opacity" disabled={claimingNft ? 1 : 0}
                         onClick={(e) => {
                           e.preventDefault();
                           claimNFTs();
                           getData();
-                        }}
-                      >
-                        {claimingNft ? "BUSY" : "BUY"}
-                      </StyledButton>
+                        }}>
+                    <span>{claimingNft ? "BUSY" : "BUY"}</span>
+                    </button>
                     </s.Container>
                   </>
                 )}
@@ -398,38 +359,8 @@ function App() {
             <s.SpacerMedium />
           </s.Container>
           <s.SpacerLarge />
-          <s.Container flex={1} jc={"center"} ai={"center"}>
-            <StyledImg
-              alt={"example"}
-              src={"/config/images/example.gif"}
-              style={{ transform: "scaleX(-1)" }}
-            />
-          </s.Container>
         </ResponsiveWrapper>
         <s.SpacerMedium />
-        <s.Container jc={"center"} ai={"center"} style={{ width: "70%" }}>
-          <s.TextDescription
-            style={{
-              textAlign: "center",
-              color: "var(--primary-text)",
-            }}
-          >
-            Please make sure you are connected to the right network (
-            {CONFIG.NETWORK.NAME} Mainnet) and the correct address. Please note:
-            Once you make the purchase, you cannot undo this action.
-          </s.TextDescription>
-          <s.SpacerSmall />
-          <s.TextDescription
-            style={{
-              textAlign: "center",
-              color: "var(--primary-text)",
-            }}
-          >
-            We have set the gas limit to {CONFIG.GAS_LIMIT} for the contract to
-            successfully mint your NFT. We recommend that you don't lower the
-            gas limit.
-          </s.TextDescription>
-        </s.Container>
       </s.Container>
     </s.Screen>
   );
